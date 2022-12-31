@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 
 class Discord:
-    def __init__(self):
+    def __init__(self)-> None:
         self._token : str = get_token(key='token')
 
     def return_bot(self)-> any:
@@ -17,8 +17,16 @@ class Discord:
         client = commands.Bot(command_prefix=prefix,intents=intents)
         return client
 
-    def execute_bot(self,client):
+    def execute_bot(self,client)-> None:
+        """ 봇 실행하는 메소드 """
         client.run(self._token)
+
+    def ping_pong(self,client):
+        """ !ping 입력 시 pong 리턴 """
+        @client.command(name='ping')
+        async def _ping(ctx):
+            await ctx.send('pong!')
+            
 
 def main():
     # Create Discord Instance
@@ -26,6 +34,8 @@ def main():
 
     # Return Discord Bot Instance
     client : any = dico.return_bot()
+    
+    dico.ping_pong(client=client)
 
     # Execute Discord Bot
     dico.execute_bot(client=client)
