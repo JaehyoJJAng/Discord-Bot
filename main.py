@@ -1,12 +1,18 @@
-from config import get_token
 import discord
 from discord.ext import commands
+from config.config import get_token
+import os
+import sys
+
+class Hello:
+    def say_hello(self,user:str)-> None:
+        return "Hello"
 
 class Discord:
     def __init__(self)-> None:
         self._token : str = get_token(key='token')
 
-    def return_bot(self)-> any:
+    def return_bot(self):
         """ 봇 객체 리턴 메소드 """
         prefix = '!'
 
@@ -17,25 +23,27 @@ class Discord:
         client = commands.Bot(command_prefix=prefix,intents=intents)
         return client
 
-    def execute_bot(self,client)-> None:
+    def execute_bot(self,client:commands.Bot)-> None:
         """ 봇 실행하는 메소드 """
         client.run(self._token)
+    
+    def say_hello(self,client:commands.Bot):
+        @client.command(name='Hello')
+        async def _Hello(ctx):
+            try :
+                await ctx.send(Hello().say_hello(user='JaehyoJJAng'))
+            except:
+                sys.exit()
 
-    def ping_pong(self,client):
-        """ !ping 입력 시 pong 리턴 """
-        @client.command(name='ping')
-        async def _ping(ctx):
-            await ctx.send('pong!')
-            
 
 def main():
     # Create Discord Instance
-    dico = Discord()
+    dico : Discord() = Discord()
 
     # Return Discord Bot Instance
-    client : any = dico.return_bot()
-    
-    dico.ping_pong(client=client)
+    client : commands.Bot = dico.return_bot()
+
+    dico.say_hello(client=client)
 
     # Execute Discord Bot
     dico.execute_bot(client=client)
