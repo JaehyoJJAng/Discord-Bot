@@ -1,9 +1,5 @@
 from discord.ext import commands
 
-class HomeWork:
-    def author(self,name:str='이두식'):
-        return name
-
 class CogHomeWork(commands.Cog):
     def __init__(self,client) -> None:
         self.client = client
@@ -14,7 +10,7 @@ class CogHomeWork(commands.Cog):
 
     @commands.command(name='이름')
     async def _name(self,ctx)-> None:
-        await ctx.send(HomeWork().author(name='이재효'))
+        await ctx.send(ctx.author.name)
     
 def setup(client):
     client.add_cog(CogHomeWork(client=client))
