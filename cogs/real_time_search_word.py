@@ -59,7 +59,7 @@ class RealTimeSearchWord:
             item_list.append(item_dic)
         return item_list
 
-class Example(commands.Cog):
+class CogRealTimeSearchWord(commands.Cog):
     def __init__(self,client) -> None:
         self.client = client
         self.real_time_search_word : RealTimeSearchWord = RealTimeSearchWord()
@@ -68,11 +68,11 @@ class Example(commands.Cog):
     async def on_ready(self)-> None:
         print("Real Time Search Word")
     
-    @commands.command(name='뉴스')
-    async def _ping(self,ctx)-> None:
+    @commands.command(name='실시간검색어')
+    async def _realtime_word(self,ctx)-> None:
         get_items : List[Dict[str,str]] = self.real_time_search_word.get_items()
         for item in get_items:
             await ctx.send(f'Title : {item["title"]}\nLink : {item["link"]}\n')
 
 def setup(client)-> None:
-    client.add_cog(Example(client=client))
+    client.add_cog(CogRealTimeSearchWord(client=client))
