@@ -13,15 +13,18 @@ class Discord:
 
     def return_bot(self):
         """ 봇 객체 리턴 메소드 """
-        prefix : str = '!'
+        try :
+            prefix : str = '!'
 
-        # intents : 봇이 서버 멤버의 정보나 , 서버 멤버 리스트를 불러올 수 있도록 허용하는 설정이었음
-        intents : discord.Intents.all() = discord.Intents.all()
+            # intents : 봇이 서버 멤버의 정보나 , 서버 멤버 리스트를 불러올 수 있도록 허용하는 설정이었음
+            intents : discord.Intents.all() = discord.Intents.all()
 
-        # Bot 객체 생성
-        client : commands.Bot(command_prefix=prefix,intents=intents) = commands.Bot(command_prefix=prefix,intents=intents)
-        return client
-
+            # Bot 객체 생성
+            client : commands.Bot(command_prefix=prefix,intents=intents) = commands.Bot(command_prefix=prefix,intents=intents)
+            return client
+        except:
+            return False
+            
     def load_extensions(self,client)-> Union[None,bool]:
         for filename in os.listdir('cogs/'):
             if '.py' in filename:
@@ -41,7 +44,8 @@ def main()-> None:
 
     # Return Discord Bot Instance
     client = dico.return_bot()
-    
+
+
     # Load Extensions
     dico.load_extensions(client=client)
 

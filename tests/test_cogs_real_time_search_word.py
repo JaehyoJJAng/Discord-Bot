@@ -24,6 +24,6 @@ class RealTimeSearchWordTest(unittest.TestCase):
     def test_get_items(self)-> None:
         items: List[Dict[str,str]] = self.real_time_search_word.get_items()
         item_count : int = len(items)
-        self.assertEqual(item_count,3)
+        self.assertEqual(item_count,)
 if __name__ == '__main__':
     unittest.main()
