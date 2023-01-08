@@ -45,7 +45,6 @@ def main()-> None:
     # Return Discord Bot Instance
     client = dico.return_bot()
 
-
     # Load Extensions
     dico.load_extensions(client=client)
 
