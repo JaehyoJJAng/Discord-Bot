@@ -6,6 +6,6 @@ import sys
 BASE_DIR : str = os.path.dirname(Path(__file__).resolve().parent)
 sys.path.append(BASE_DIR)
 from cogs.real_time_search_word import RealTimeSearchWord
-from cogs.homework import HomeWork
+from cogs.lunch import Lunch
 from main import Discord
 # ======================               ======================
