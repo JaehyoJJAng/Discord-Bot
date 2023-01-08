@@ -30,7 +30,7 @@ class Lunch:
         """ Json Data Load """
         file : str = 'cogs/data/lunch.json'
         with open(file,'r',encoding='UTF-8') as fp:
-            json_data : Dict[str,str] = json.loads(fp.read())
+            json_data : Dict[str,List[str]] = json.loads(fp.read())
         return json_data
 
 class CogLunchRecommend(commands.Cog):
