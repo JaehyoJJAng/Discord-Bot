@@ -58,8 +58,15 @@ class Quiz(commands.Cog):
                 return False
 
         try :
-            await self.client.wait_for('message',timeout=10.0,check=checkAnswer)
-            await ctx.send('정답이에요!')
+            # wat_for 함수의 리턴값 받기
+            message = await self.client.wait_for('message',timeout=10.0,check=checkAnswer)
+
+            # 메시지의 작성자(author)의 이름(name) 속성 사용
+            name = message.author.name
+            
+            embed = discord.Embed(title = '', description = f'{name} 님, 정답이에요 !', color = discord.Color.blue())
+            
+            await ctx.send(embed=embed)
         except asyncio.TimeoutError:
             await ctx.send('땡! 시간초과에요!')
 
