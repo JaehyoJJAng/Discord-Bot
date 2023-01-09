@@ -9,5 +9,6 @@ from cogs.real_time_search_word import RealTimeSearchWord
 from cogs.lunch import Lunch
 from cogs.homework import HomeWorkLunch,HomeWorkCSV
 from cogs.quiz import CSV,Quiz
+from cogs.image_crawling import GetImage
 from main import Discord
 # ======================               ======================
