@@ -8,5 +8,6 @@ sys.path.append(BASE_DIR)
 from cogs.real_time_search_word import RealTimeSearchWord
 from cogs.lunch import Lunch
 from cogs.homework import HomeWorkLunch
+from cogs.quiz import CSV,Quiz
 from main import Discord
 # ======================               ======================
