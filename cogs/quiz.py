@@ -1,5 +1,6 @@
 from discord.ext import commands
 from typing import Union,Dict,List
+import discord 
 import csv
 import random 
 import re
@@ -46,7 +47,8 @@ class Quiz(commands.Cog):
         problem : str  = problem_info['problem']
 
         # 퀴즈 문제 전송
-        await ctx.send(problem)
+        embed = discord.Embed(title='퀴즈',description=problem,color = discord.Color.blue())
+        await ctx.send(embed=embed)
 
         # answer 유효성 체크
         def checkAnswer(message):
