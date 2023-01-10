@@ -11,5 +11,6 @@ from cogs.homework import HomeWorkLunch,HomeWorkCSV
 from cogs.quiz import CSV,Quiz
 from cogs.image_crawling import GetImage
 from cogs.page_views import GetPageViews
+from cogs.file_upload import FileUpload
 from main import Discord
 # ======================               ======================
