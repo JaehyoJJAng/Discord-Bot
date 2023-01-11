@@ -55,10 +55,10 @@ class SendImage(commands.Cog):
         img_links : List[str] = self.get_image.main(query=arg1)
         
         # embed 커스텀
-        embeds = [discord.Embed(title='', description=img_link,color = discord.Color.blue()) for img_link in img_links]
-        
-        # 메시지 보내기
-        [await ctx.send(embed=embed) for embed in embeds]        
+        for img_link in img_links:
+            embed = discord.Embed(title=arg1,description='',color = discord.Color.blue())
+            embed.set_image(url=img_link)
+            await ctx.send(embed=embed)        
 
 def setup(client)-> None:
     client.add_cog(SendImage(client=client))

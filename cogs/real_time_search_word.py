@@ -5,6 +5,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from typing import Dict,List
+import discord
+import urllib.parse as rep
 
 class ChromeDriver:
     @staticmethod
@@ -43,13 +45,13 @@ class RealTimeSearchWord:
         soup = self.get_soup_obj(page_source=self.browser.page_source)
 
         # 아이템 길이
-        item_length : int = len(soup.select('a.rank-layer',limit=3))
+        item_length : int = len(soup.select('a.rank-layer',limit=10))
         
         item_list : List[Dict[str,str]] = []
         for idx in range(item_length):
             item_dic : Dict[str,str] = {}
 
-            items : list =  soup.select('a.rank-layer',limit=3)
+            items : list =  soup.select('a.rank-layer',limit=10)
 
             title : str = items[idx].select_one('.rank-text').text.strip()
             link  : str = items[idx].attrs['href']
@@ -64,15 +66,38 @@ class CogRealTimeSearchWord(commands.Cog):
         self.client = client
         self.real_time_search_word : RealTimeSearchWord = RealTimeSearchWord()
 
+    def query_to_quote(self,url:str):
+        query : str = rep.quote_plus(url.split('query=')[-1])
+        return query
+
     @commands.Cog.listener()
     async def on_ready(self)-> None:
         print("Real Time Search Word")
     
     @commands.command(name='실시간검색어')
     async def _realtime_word(self,ctx)-> None:
+        embed = discord.Embed(title='알림',description='실시간 검색어 수집을 시작합니다!',color = discord.Color.blue())
+        await ctx.send(embed=embed)
+        
         get_items : List[Dict[str,str]] = self.real_time_search_word.get_items()
         for item in get_items:
-            await ctx.send(f'Title : {item["title"]}\nLink : {item["link"]}\n')
+            # URL
+            url : str = item['link']
+
+            # Title
+            title : str = item['title']
+
+            # 쿼리 유니코드화
+            query : str = self.query_to_quote(url=item['link'])
+            
+            # URL 재지정
+            url : str = url.split('query=')[0] + f'query={query}'
+            
+            embed = discord.Embed(description=f"[{title}]({url})",color = discord.Color.blue())
+            await ctx.send(embed=embed)
+
+        embed = discord.Embed(title='알림',description='실시간 검색어 수집이 완료되었습니다',color = discord.Color.blue())
+        await ctx.send(embed=embed)
 
 def setup(client)-> None:
     client.add_cog(CogRealTimeSearchWord(client=client))
