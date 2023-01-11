@@ -2,6 +2,7 @@ from typing import Dict,List
 from discord.ext import commands
 import random
 import json
+import discord
 
 class Lunch:
     def __init__(self) -> None:
@@ -20,7 +21,7 @@ class Lunch:
 
         # 카테고리의 메뉴 랜덤 추출
         lunch : str = random.choice(category_menu_list)
-        return f'오늘 점심은 {category}, 그 중에서 {lunch}는 어떠세요?'
+        return f'오늘 점심은 {category}, 그 중에서 {lunch}(은)는 어떠세요?'
         
     def get_categorys(self)-> List[str]:
         """ Category Return (한식 중식 일식 .. ) """
@@ -40,11 +41,12 @@ class CogLunchRecommend(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self)-> None:
-        print("점심 추천 Cog") 
+        print("Lunch Cog is staring !") 
     
     @commands.command(name='점심추천')
     async def _lunch_rec(self,ctx)-> None:
-        await ctx.send(self.lunch.random_choice())
+        embed = discord.Embed(title='점심 추천서',description=self.lunch.random_choice(),color = discord.Color.blue())
+        await ctx.send(embed=embed)
 
 def setup(client)-> None:
     client.add_cog(CogLunchRecommend(client=client))
