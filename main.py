@@ -20,7 +20,7 @@ class Discord:
             intents : discord.Intents.all() = discord.Intents.all()
 
             # Bot 객체 생성
-            client : commands.Bot(command_prefix=prefix,intents=intents) = commands.Bot(command_prefix=prefix,intents=intents)
+            client : commands.Bot(command_prefix=prefix,intents=intents,help_command=None) = commands.Bot(command_prefix=prefix,intents=intents)
             return client
         except:
             return False
