@@ -64,11 +64,13 @@ class Quiz(commands.Cog):
             # 메시지의 작성자(author)의 이름(name) 속성 사용
             name = message.author.name
             
-            embed = discord.Embed(title = '', description = f'{name} 님, 정답이에요 !', color = discord.Color.blue())
+            embed = discord.Embed(title = '정답', description = f'{name} 님, 정답이에요 !', color = discord.Color.blue())
             
             await ctx.send(embed=embed)
         except asyncio.TimeoutError:
-            await ctx.send('땡! 시간초과에요!')
+            embed = discord.Embed(title = '땡', description = f'땡! 시간초과에요\n\n정답은! \'{answer}\' 이었습니다 !~', color = discord.Color.blue())
+
+            await ctx.send(embed=embed)
 
 def setup(client)-> None:
     client.add_cog(Quiz(client=client))
