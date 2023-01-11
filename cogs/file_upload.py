@@ -35,25 +35,35 @@ class FileUpload(commands.Cog):
             embed = discord.Embed(title=f'{arg1} : Error',description='죄송합니다. 해당 인물에 대한 사진 기록이 서버에 존재하지 않습니다.',color = discord.Color.red())
             await ctx.send(embed=embed)
             return 0 # 함수 종료
-        
+
+        # 파일 리스트 목록
+        file_list : List[str] = self.get_file_list(keyword=arg1)
+
+        # 파일 랜덤 추출 (우선 1개만)
+        file : str = self.random_choice_any_pic(file_list=file_list)
+
+        # 디스코드에 올릴 파일 지정
+        image = discord.File(file,filename='image.png')
+
         if arg1 == '고윤정':
-            # 파일 리스트 목록
-            file_list : List[str] = self.get_file_list(keyword=arg1)
-
-            # 파일 랜덤 추출 (우선 1개만)
-            file : str = self.random_choice_any_pic(file_list=file_list)
-
-            # 디스코드에 올릴 파일 지정
-            image = discord.File(file,filename='image.png')
-
+            """ 디렉토리 : 고윤정 """
             # 랜덤 텍스트 메시지 작성
             text_list : List[str] = [
                 '모가지가 떨어져 내린다하여 낙수',
                 '멋지지 않느냐?',
                 '장욱 !',
                 '나는 절세미인이다.'
+            ]                
+        else:
+            """ 디렉토리 : 두식이 """
+            # 랜덤 텍스트 메시지 작성
+            text_list : List[str] = [
+                '하아 .. 개껌 마렵네',
+                '뭘 봐 주인?',
+                '어이 주인. 개껌 한사바리 줘봐라',
+                '난 이두식이다 꼽냐?'
             ]
-            
+
             # 텍스트 메시지 랜덤 추출 (1개)
             text : str = self.random_choice_any_text(text_list=text_list)
 
@@ -66,9 +76,6 @@ class FileUpload(commands.Cog):
 
             # 메시지 보내기
             await ctx.send(embed=embed,file=image)
-
-        else:
-            pass
 
 
 def setup(client)-> None:
