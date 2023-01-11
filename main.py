@@ -45,6 +45,16 @@ def main()-> None:
     # Return Discord Bot Instance
     client = dico.return_bot()
 
+    # Client Event
+    @client.event
+    async def on_member_join(member):
+        if member.dm_channel:
+            channel = member.dm_channel
+        else:
+            channel = await member.create_dm() 
+        name = member.name
+        await channel.send(f'{name}님. 안녕하세요! Way To Them 디스코드에 오신 것을 환영합니다')
+
     # Load Extensions
     dico.load_extensions(client=client)
 
